@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.managerDao.NewsDao">
+
+    <!--查询所有,父母讲堂-->
+    <select id="list" resultType="com.woniu.po.NewsPo">
+        select*from news where log=1
+    </select>
+
+    <!--查询所有，活动信息-->
+    <select id="list2" resultType="com.woniu.po.NewsPo">
+        select*from news where log=2
+    </select>
+
+    <!--查询所有，活动信息-->
+    <select id="list3" resultType="com.woniu.po.NewsPo">
+        select*from news
+        <where>
+        1=1
+        <if test='title !=null and title !=" " '> and title
+            like concat('%',#{name},'%')</if>
+        </where>
+    </select>
+
+
+    <!--根据id查询-->
+    <select id="selectById" resultType="com.woniu.po.NewsPo">
+        select*from news where id=#{id}
+    </select>
+
+    <!--    保存-->
+    <insert id="save" parameterType="com.woniu.po.NewsPo">
+		insert into news
+		(
+		title,image,day,log,cotent
+		)
+		values
+		(
+			#{title},
+			#{image},
+			#{day},
+		#{log},
+		#{cotent}
+		)
+	</insert>
+
+    <!--    修改-->
+    <update id="update" parameterType="com.woniu.po.NewsPo">
+        update news
+        <set>
+            <if test="title != null">`title` = #{title},</if>
+            <if test="image != null">`image` = #{image},</if>
+            <if test="day != null">`day` = #{day},</if>
+            <if test="log != null">`log` = #{log},</if>
+            <if test="cotent != null">`cotent` = #{cotent},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--    删除-->
+    <delete id="remove">
+    delete from news where id=#{id}
+	</delete>
+
+    <!--    <delete id="batchRemove">-->
+    <!--        delete from salary where id in-->
+    <!--        <foreach item="id" collection="array" open="(" separator="," close=")">-->
+    <!--            #{id}-->
+    <!--        </foreach>-->
+    <!--    </delete>-->
+
+
+</mapper>

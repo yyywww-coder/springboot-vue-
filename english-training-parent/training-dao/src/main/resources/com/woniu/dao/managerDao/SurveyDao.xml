@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.managerDao.SurveyDao">
+
+    <!--查询所有-->
+    <select id="list" resultType="com.woniu.po.SurveyPo">
+        select*from survey where log=1
+        <if test='sRemarks !=null and sRemarks !=" " '> and sRemarks
+            like concat('%',#{name},'%')</if>
+    </select>
+
+    <!--    保存-->
+    <insert id="save" parameterType="com.woniu.po.SurveyPo">
+		insert into survey
+		(
+		sRemarks,tRemarks,suggestions,log
+		)
+		values
+		(
+			#{sRemarks},
+			#{tRemarks},
+			#{suggestions},
+			1
+		)
+	</insert>
+
+    <!--    修改-->
+    <update id="update" parameterType="com.woniu.po.SurveyPo">
+        update survey
+        <set>
+            <if test="sRemarks != null">`sRemarks` = #{sRemarks},</if>
+            <if test="tRemarks != null">`tRemarks` = #{tRemarks},</if>
+            <if test="suggestions != null">`suggestions` = #{suggestions},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--    删除-->
+    <delete id="remove">
+    update survey set log=0 where id=#{id}
+	</delete>
+
+    <!--    <delete id="batchRemove">-->
+    <!--        delete from salary where id in-->
+    <!--        <foreach item="id" collection="array" open="(" separator="," close=")">-->
+    <!--            #{id}-->
+    <!--        </foreach>-->
+    <!--    </delete>-->
+
+
+</mapper>

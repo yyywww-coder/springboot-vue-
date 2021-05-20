@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.managerDao.ExamDao">
+    <!--查询所有的考试-->
+    <select id="getAllExam" resultType="ExamPo">
+        select * from exam_manage <where>
+        <if test="source!=null and source!=''">source like concat("%" #{source} "%")</if>
+    </where>
+    </select>
+    <!--删除考试-->
+    <delete id="deleteByExamCode">
+        delete from exam_manage where examCode=#{examCode}
+    </delete>
+
+    <!--根据examCode获取数据-->
+    <select id="getByExamCode" resultType="ExamPo">
+        select * from exam_manage where examCode=#{examCode}
+    </select>
+
+    <!--修改数据-->
+    <update id="updateExam" parameterType="ExamPo">
+        update exam_manage <set>
+        <if test="description!=null and description!=''">description=#{description},</if>
+        <if test="source!=null and source!=''">source=#{source}</if>
+        <if test="paperId!=null and paperId!=''">paperId=#{paperId}</if>
+        <if test="examDate!=null and examDate!=''">examDate=#{examDate}</if>
+        <if test="totalTime!=null and totalTime!=''">totalTime=#{totalTime}</if>
+        <if test="grade!=null and grade!=''">grade=#{grade}</if>
+        <if test="term!=null and term!=''">term=#{term}</if>
+        <if test="major!=null and major!=''">major=#{major}</if>
+        <if test="institute!=null and institute!=''">institute=#{institute}</if>
+        <if test="totalScore!=null and totalScore!=''">totalScore=#{totalScore}</if>
+        <if test="type!=null and type!=''">`type`=#{type}</if>
+        <if test="tips!=null and tips!=''">`tips`=#{tips}</if>
+    </set>
+        where examCode=#{examCode}
+    </update>
+
+    <!--查询最后一条记录的paperId,返回给前端达到自增效果-->
+    <select id="findOnlyPaperId" resultType="ExamPo">
+        select paperId from exam_manage order by paperId desc limit 1
+    </select>
+
+    <!--添加考试-->
+    <insert id="addExam" parameterType="ExamPo">
+        insert into exam_manage(description,source,paperId,examDate,totalTime,grade,term,major,institute,totalScore,type,tips)
+            values(#{description},#{source},#{paperId},#{examDate},#{totalTime},#{grade},#{term},#{major},#{institute},#{totalScore},#{type},#{tips})
+    </insert>
+</mapper>

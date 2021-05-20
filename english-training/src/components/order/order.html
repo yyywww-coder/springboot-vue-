@@ -1,0 +1,162 @@
+<div>
+    <!-- 面包屑 -->
+    <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item><a href="/order">订单管理</a></el-breadcrumb-item>
+        <el-breadcrumb-item>订单列表</el-breadcrumb-item>
+    </el-breadcrumb>
+
+     <el-row :gutter="10">
+       <el-col :span="8">
+        <el-input placeholder="请输入要查询的用户名" v-model="searchText">
+            <el-button  @click="startQuery()"  slot="append"  icon="el-icon-search" ></el-button>
+        </el-input>
+        </el-col>
+        <el-col :span="8">
+            <el-button @click="showAddOrderDialog()">添加订单</el-button>
+        </el-col>
+    </el-row>
+
+    <el-table  :data="orderData" style="width: 100%">
+        <el-table-column
+            fixed
+            prop="id"
+            label="id"
+            width="150">
+        </el-table-column>
+<el-table-column
+fixed
+prop="videoname"
+label="视频名"
+width="150">
+</el-table-column>
+
+<el-table-column
+fixed
+prop="username"
+label="账户名"
+width="150">
+</el-table-column>
+
+    <el-table-column
+    prop="orderTime"
+    label="购买时间"
+    width="120"
+    :formatter="formatDate"
+    >
+</el-table-column>
+
+<el-table-column
+prop="payType"
+label="支付方式" 
+width="120" >
+<template slot-scope="scope">{{ scope.row.payType=='2'?'支付宝':'微信' }}</template>
+</el-table-column>
+
+        <el-table-column label="操作">
+            <!-- element ui  table表格的自定义列 -->
+            <template slot-scope="scope">
+                <!-- element -ui  button   plain属性，鼠标放上去变蓝色  size="mini" -->
+                <el-button type="primary" icon="el-icon-edit" circle plain
+                    @click="showEditOrderDialog(scope.row)"
+                > </el-button>
+                <el-button type="danger" icon="el-icon-delete" circle plain
+                    @click="delOrder(scope.row.id)"
+                ></el-button>
+            </template>
+        </el-table-column>
+
+    </el-table>
+
+     <!-- 分页   默认情况下 每10条   保存当前页(current-page)   改变页码的事件   每页多少条(page-size)
+     @current-change改变当前页的事件  changeCurrentPage   内部传了一个当前页的实参-->
+     <el-pagination
+     :background="true"
+     layout="prev, pager, next"
+     :total="totalCount"
+     :page-size="4"
+     :current-page="pageIndex"
+     @current-change = "changeCurrentPage"
+     >
+ </el-pagination>
+
+    <el-dialog title="添加订单" :visible.sync="addDialogFormVisible" 
+      :rules='rules' label-width="100px" ref = "addOrder">
+      <el-form :model="order">
+        <!-- <el-form-item label="用户id" prop="name">
+            <el-input v-model="order.userid"></el-input>
+        </el-form-item> -->
+
+        <el-form-item label="账户名" prop="username">
+            <el-input v-model="order.username"></el-input>
+        </el-form-item>
+
+        <el-form-item label="下单时间" prop="orderTime">
+            <el-date-picker style="width: 180px;"
+            v-model="order.orderTime"
+            type="datetime"
+            :formatter="formatDate"
+            placeholder="下单时间">
+             </el-date-picker>
+            </el-form-item>
+
+              <el-form-item label="视频标题" prop="videoname">
+    <el-input v-model="order.videoname"></el-input>
+</el-form-item>
+
+ 
+
+<el-form-item label="支付方式">
+    <el-radio v-model="order.payType" label="1">支付宝</el-radio>
+    <el-radio v-model="order.payType" label="2">微信</el-radio>
+</el-form-item>
+
+        </el-form> 
+
+
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="addDialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="addOrder()">确 定</el-button>
+        </div>
+     </el-dialog>
+
+
+ 
+     <el-dialog title="编辑订单" :visible.sync="dialogEditOrderVisible">
+        <el-form :model="editOrder" label-width="80px">
+          
+            <el-form-item label="账户名" prop="username">
+                <el-input v-model="editOrder.username"></el-input>
+                </el-form-item>
+
+                 
+            <el-form-item label="视频名" prop="videoname">
+                <el-input v-model="editOrder.videoname"></el-input>
+                </el-form-item>
+
+
+
+         <el-form-item label="下单时间" prop="orderTime">
+            <el-date-picker style="width: 180px;"
+            v-model="editOrder.orderTime"
+            type="datetime"
+            :formatter="formatDate"
+            placeholder="下单时间">
+             </el-date-picker>
+            </el-form-item>
+
+            <el-form-item label="支付方式">
+                <el-radio v-model="order.payType" label="1">支付宝</el-radio>
+                <el-radio v-model="order.payType" label="2">微信</el-radio>
+            </el-form-item>
+               
+        </el-form>
+
+        <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogEditOrderVisible = false">取 消</el-button>
+        <el-button type="primary" @click="updateOrder()">确 定</el-button>
+        </div> 
+  </el-dialog>
+
+
+</div>

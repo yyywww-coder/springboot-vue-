@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woniu.dao.managerDao.ScoreDao">
+
+    <!--查询所有分数-->
+    <select id="findById"  resultType="ScorePo">
+        select * from score where studentId = #{studentId}
+    </select>
+
+    <select id="findByCode" resultType="ScorePo">
+        select max(etScore) as etScore from score where examCode = #{examCode} group by studentId
+    </select>
+
+    <!--根据ID更改分数-->
+    <update id="update" parameterType="ScorePo">
+        update score set stage1=#{stage1},stage2=#{stage2},stage3=#{stage3},stage4=#{stage4},
+          studentid=#{studentid},courseid=#{courseid}  where id=#{id}
+    </update>
+
+    <!--根据ID删除分数-->
+    <delete id="delete" parameterType="ScorePo">
+        delete from score where id=#{id}
+    </delete>
+
+    <!--新增分数-->
+    <insert id="add" parameterType="ScorePo">
+        insert into score(stage1, stage2,stage3,stage4,studentid,courseid)
+        values (#{stage1},#{stage2},#{stage3},#{stage4},#{studentid},#{courseid})
+    </insert>
+
+</mapper>

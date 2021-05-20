@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="网站名称">
+    <meta name="applicable-device" content="pc,mobile">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>meuiBdmap百度地图实例化控件</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link type="text/css" rel="stylesheet" href="">
+    <link type="text/css" rel="stylesheet" href="assets/css/meui-bdmap.css"><!--meui百度地图实例化-->
+    <link type="text/css" rel="stylesheet" href="test/demo.css">
+    <link type="images/x-icon" rel="shortcut icon" href="/favicon.ico">
+    <script type="text/javascript">if(top.location != self.location){ top.location = self.location; }</script>
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/html5shiv/r29/html5.min.js"></script>
+        <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+        <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/rem/1.3.4/js/rem.min.js"></script>
+        <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/json2/20160511/json2.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+
+
+    <div id="login_click">
+        <a id="btlogin" href="http://localhost:8080">返回首页</a>
+        </div>
+
+
+
+    <div class="wrap" style="float:left">
+            <div class="grid-one">
+                <div class="grid-title"></div>
+                <div class="grid-content">
+                    <div class="grid-box">
+                        <div class="title">学校地址</div>
+                        <div id="test201"></div>
+                    </div>
+                    <!-- <div class="grid-box">
+                        <div class="title">自定义地图信息</div>
+                        <div id="test202"></div>
+                    </div> -->
+                </div>
+            </div>
+        </div><!--/.panel-demo-->
+
+<p>
+    <br>
+    免费试听：400-660-6615
+    <br><br>
+    汽博总校：
+    TEL: 63088766
+    ADD: 重庆两江新区汽博金贸时代16栋F3
+    <br><br>
+    巴南校区
+    TEL: 62868806
+    ADD: 重庆巴南区李家沱恒大城一期
+    <br><br>
+    美利山校区
+    TEL: 63088766
+    ADD: 重庆渝北区鸳鸯美利山
+    <br><br>
+    金渝校区
+    TEL: 62868806
+    ADD: 重庆渝北金渝小学对面
+    <br>
+
+    <img src="./assets/img/二维码.png" alt="">  <br>
+     扫描微信公众号，惊喜等着您！
+    <br><br>
+    网站：
+<a href="www.happyenglish.com ">www.happyenglish.com </a>
+</p>
+
+    </div><!--/.wrap-->
+
+    <!--================================================================================-->
+    <!--                            JAVASCRIPT                                          -->
+    <!--================================================================================-->
+    <script src="src/jquery.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=2COzFaICuIyVj7V3VetKfmdRVnX8BhVr"></script><!--百度地图api文件-->
+    <script type="text/javascript" src="src/meui-bdmap.js"></script><!--meui百度地图实例化-->
+    <script type="text/javascript" src="test/demo.js"></script>
+    <!-- <script type="text/javascript" src="test/demo2.js"></script> -->
+	<script type="text/javascript">
+		var ishttps = 'https:' == document.location.protocol ? true : false;
+		if ((self.frameElement && self.frameElement.tagName == "IFRAME")||(window.frames.length != parent.frames.length)||(self != top)) {
+			//alert("self.location:"+self.location);
+			var new_href=self.location.href.replace("https","http");
+			//alert("new_href:"+new_href);
+			if(self.location.href.indexOf("https")>=0){
+				//self.location.href=new_href;
+				top.location.href=new_href;
+			}
+		}else{
+			if(ishttps){
+				location.href=location.href.replace("https","http");
+			}
+		};
+	</script>
+</body>
+
+<style>
+
+#login_click{ margin-top:32px; height:40px;}
+#login_click a
+{
+
+
+    text-decoration:none;
+	background: #FF004F;
+	color:#f2f2f2;
+
+	padding: 10px 30px 10px 30px;
+	font-size:16px;
+	font-family: 微软雅黑,宋体,Arial,Helvetica,Verdana,sans-serif;
+	font-weight:bold;
+	border-radius:3px;
+
+	-webkit-transition:all linear 0.30s;
+	-moz-transition:all linear 0.30s;
+	transition:all linear 0.30s;
+
+	}
+   #login_click a:hover { background:#385f9e; }
+
+</style>
+</html>

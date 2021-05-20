@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woniu.dao.managerDao.StudentsDao">
+
+    <!--查询所有学员-->
+    <select id="findAllStudents"  resultType="StudentsPo">
+        select s.*,c.grade from students s inner join course c on s.courseid=c.id
+        <where>
+            1=1
+            <if test='username !=null and username !=" " '> and username
+                like concat('%',#{username},'%')</if>
+            <if test="courseid !=null"> and courseid=#{courseid}</if>
+        </where>
+    </select>
+
+    <select id="findAll" resultType="StudentsPo">
+        select * from students where username like concat("%" #{username} "%")
+    </select>
+
+    <!--根据ID更改学员-->
+    <update id="update" parameterType="StudentsPo">
+        update students
+        <set>
+            <if test="username !=null">  username=#{username},</if>
+            <if test="gender !=null">  gender=#{gender},</if>
+            <if test="age !=null">  age=#{age},</if>
+            <if test="phone !=null">  phone=#{phone},</if>
+            <if test="pName !=null">  pName=#{pName},</if>
+            <if test="pPhone !=null">  pPhone=#{pPhone},</if>
+            <if test="password !=null">  password=#{password},</if>
+            <if test="email !=null">  email=#{email},</if>
+            <if test="address !=null">  address=#{address},</if>
+            <if test="courseid !=null">  courseid=#{courseid},</if>
+            <if test="comment !=null">  comment=#{comment},</if>
+            <if test="avatar !=null">  avatar=#{avatar},</if>
+            <if test="status !=null">  status=#{status},</if>
+            <if test="evaluation !=null">  evaluation=#{evaluation}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--根据ID删除学员-->
+    <delete id="delete" parameterType="StudentsPo">
+        delete from students where id=#{id}
+    </delete>
+
+    <!--新增学员-->
+    <insert id="add" parameterType="StudentsPo">
+        insert into students(username, gender,address,age,password,phone,pName,pPhone
+        ,email,comment,courseid,avatar,status,evaluation,grade,major) values (#{username},#{gender},#{address}
+        ,#{age},#{password},#{phone},#{pName},#{pPhone},#{email},#{comment},#{courseid}
+        ,#{avatar},#{status},#{evaluation},#{grade},#{major})
+    </insert>
+
+    <!--查询所有学员-->
+    <select id="getTotal"  resultType="Integer">
+        select count(*) from students
+    </select>
+
+    <!--查询各个学科人数-->
+    <select id="getNum" resultType="Integer">
+        SELECT count(*) FROM students s , course c WHERE s.courseid =  c.id GROUP BY c.grade
+    </select>
+
+
+
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.frontDao.VideoFrontDao">
+    <!--查找所有的用户-->
+    <select id="getAllVideo"  resultType="VideoPo">
+        select v.*,m.username,c.grade from video v join manager m on v.teacherid=m.id join course c
+        on v.courseid=c.id
+        <where>
+          <if test="courseId!=null and courseId>0">v.courseId=#{courseId} </if>
+            <if test="createTime !=null and createTime !=' ' "> order by v.courseId v.createTime desc </if>
+            <if test="price !=null">,v.price desc </if>
+        </where>
+    </select>
+
+</mapper>

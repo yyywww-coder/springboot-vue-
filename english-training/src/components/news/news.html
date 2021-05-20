@@ -1,0 +1,152 @@
+<div>
+    <!-- 面包屑 -->
+    <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item><a href="/news">新闻管理</a></el-breadcrumb-item>
+        <el-breadcrumb-item>新闻列表</el-breadcrumb-item>
+    </el-breadcrumb>
+
+     <el-row :gutter="10">
+       <el-col :span="8">
+            <el-input placeholder="请输入要查询的新闻标题" v-model="searchText">
+                <el-button  @click="startQuery()"  slot="append"  icon="el-icon-search" ></el-button>
+            </el-input>
+        </el-col>      
+        <el-col :span="8">
+            <el-button @click="showAddNewsDialog()">添加新闻</el-button>
+        </el-col>
+    </el-row>
+
+    <el-table  :data="newsData" style="width: 100%">
+        <el-table-column
+            fixed
+            prop="id"
+            label="id"
+            width="150">
+        </el-table-column>
+        <el-table-column
+        fixed
+        prop="title"
+        label="新闻标题"
+        width="150">
+    </el-table-column>
+    <el-table-column
+    fixed
+    prop="cotent"
+    label="新闻内容"
+    width="150">
+</el-table-column>
+
+<el-table-column
+prop="day"
+label="日期"
+width="120"
+:formatter="formatDate"
+>
+</el-table-column>
+
+
+<el-table-column
+prop="log"
+label="新闻模块" 
+width="120" >
+<template slot-scope="scope">{{ scope.row.log=='1'?'父母讲堂':'活动信息' }}</template>
+</el-table-column>
+
+
+        <el-table-column label="操作">
+            <!-- element ui  table表格的自定义列 -->
+            <template slot-scope="scope">
+                <!-- element -ui  button   plain属性，鼠标放上去变蓝色  size="mini" -->
+                <el-button type="primary" icon="el-icon-edit" circle plain
+                    @click="showEditNewsDialog(scope.row)"
+                > </el-button>
+                <el-button type="danger" icon="el-icon-delete" circle plain
+                    @click="delNews(scope.row.id)"
+                ></el-button>
+            </template>
+        </el-table-column>
+
+    </el-table>
+
+     <!-- 分页   默认情况下 每10条   保存当前页(current-page)   改变页码的事件   每页多少条(page-size)
+     @current-change改变当前页的事件  changeCurrentPage   内部传了一个当前页的实参-->
+     <el-pagination
+     :background="true"
+     layout="prev, pager, next"
+     :total="totalCount"
+     :page-size="4"
+     :current-page="pageIndex"
+     @current-change = "changeCurrentPage"
+     >
+ </el-pagination>
+
+    <el-dialog title="添加新闻" :visible.sync="addDialogFormVisible"
+      :rules='rules' label-width="100px" ref = "addNews">
+      <el-form :model="news">
+        <el-form-item label="新闻标题" prop="title">
+            <el-input v-model="news.title"></el-input>
+        </el-form-item>
+  <el-form-item label="新闻内容" prop="cotent">
+    <el-input v-model="news.cotent"></el-input>
+</el-form-item>
+
+<el-form-item label="新闻分类">
+    <el-radio v-model="news.log" label="1">父母讲堂</el-radio>
+    <el-radio v-model="news.log" label="2">活动信息</el-radio>
+</el-form-item>
+
+<el-form-item label="新闻时间" prop="day">
+    <el-date-picker style="width: 180px;"
+    v-model="news.day"
+    type="datetime"
+    :formatter="formatDate"
+    placeholder="新闻时间">
+     </el-date-picker>
+    </el-form-item>
+
+        </el-form>
+
+
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="addDialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="addNews()">确 定</el-button>
+        </div>
+     </el-dialog>
+
+
+
+     <el-dialog title="编辑新闻" :visible.sync="dialogEditNewsVisible">
+        <el-form :model="editNews" label-width="80px">
+
+            <el-form-item label="新闻标题" prop="title">
+                <el-input v-model="editNews.title"></el-input>
+            </el-form-item>
+      <el-form-item label="新闻内容" prop="cotent">
+        <el-input v-model="editNews.cotent"></el-input>
+    </el-form-item>
+    
+    <el-form-item label="新闻分类"  prop="log">
+        <el-radio v-model="editNews.log" label="1">父母讲堂</el-radio>
+        <el-radio v-model="editNews.log" label="2">活动信息</el-radio>
+    </el-form-item>
+
+    <el-form-item label="新闻时间" prop="day">
+        <el-date-picker style="width: 180px;"
+        v-model="editNews.day"
+        type="datetime"
+        :formatter="formatDate"
+        placeholder="新闻时间">
+         </el-date-picker>
+        </el-form-item>
+
+        </el-form>
+
+        <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogEditNewsVisible = false">取 消</el-button>
+        <el-button type="primary" @click="updateNews()">确 定</el-button>
+        </div>
+  </el-dialog>
+
+
+</div>

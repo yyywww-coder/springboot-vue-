@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.managerDao.OrdersDao">
+
+
+    <resultMap id="OrderResultMap" type="com.woniu.po.OrderPo">
+        <result column="username" property="user.username"></result>
+        <!--        <result column="title" property="video.title"></result>-->
+        <result column="videoname" property="video.title"></result>
+    </resultMap>
+
+    <!--查询所有-->
+    <!--    <select id="list"   resultMap="OrderResultMap" >-->
+    <select id="list"   resultType="com.woniu.po.OrderPo" >
+
+        select o.* from orders o ,video v,users u where log=1 and v.title=o.videoname and u.account=o.username
+        <if test="username !=null and username !=''">
+            and o.username  like concat('%',#{username},'%')
+        </if>
+    </select>
+
+    <!--    保存-->
+    <insert id="save" parameterType="com.woniu.po.OrderPo">
+		insert into orders
+		(
+		userid,videoid,orderTime,payType,videoname,username,log
+		)
+		values
+		(
+			#{userid},
+			#{videoid},
+			#{orderTime},
+			#{payType},
+			#{videoname},
+			#{username},
+			1
+		)
+	</insert>
+
+    <!--    修改-->
+    <update id="update" parameterType="com.woniu.po.OrderPo">
+        update orders
+        <set>
+            <if test="userid != null">`userid` = #{userid}, </if>
+            <if test="videoid != null">`videoid` = #{videoid}, </if>
+            <if test="orderTime != null">`orderTime` = #{orderTime}, </if>
+            <if test="payType != null">`payType` = #{payType}, </if>
+            <if test="videoname != null">`videoname` = #{videoname}, </if>
+            <if test="username != null">`username` = #{username}, </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--    删除-->
+    <update id="remove">
+    update orders set log=0 where id=#{id}
+	</update>
+
+    <!--    <delete id="batchRemove">-->
+    <!--        delete from salary where id in-->
+    <!--        <foreach item="id" collection="array" open="(" separator="," close=")">-->
+    <!--            #{id}-->
+    <!--        </foreach>-->
+    <!--    </delete>-->
+
+
+</mapper>

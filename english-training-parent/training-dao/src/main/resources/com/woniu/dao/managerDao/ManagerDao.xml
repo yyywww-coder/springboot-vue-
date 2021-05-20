@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.managerDao.ManagerDao">
+    <!--登录-->
+    <select id="doLogin"  resultType="ManagerPo">
+        select * from manager where account = #{account}
+    </select>
+
+    <!--根据用户名查-->
+    <select id="findByAccount" resultType="ManagerPo">
+        select * from manager where  account = #{account}
+    </select>
+
+    <!--模糊查询-->
+    <select id="findByUsername" resultType="ManagerPo">
+        select * from manager where  username LIKE CONCAT(CONCAT('%', #{username}), '%')
+    </select>
+
+    <!--查所有-->
+    <select id="findAll" resultType="ManagerPo">
+        select * from manager
+    </select>
+
+    <!--删除-->
+    <delete id="delManager" parameterType="Integer">
+        delete from manager where id = #{id}
+    </delete>
+
+    <!--修改-->
+    <update id="updateManager" parameterType="ManagerPo">
+        update manager
+        <set>
+            <if test="account!=null and account!=''">
+                account = #{account},
+            </if>
+            <if test="password!=null and password!=''">
+                password = #{password},
+            </if>
+            <if test="username!=null and username!=''">
+                username = #{username},
+            </if>
+            <if test="gender!=null and gender!=''">
+                gender = #{gender},
+            </if>
+            <if test="age!=null and age!=''">
+                age = #{age},
+            </if>
+            <if test="education!=null and education!=''">
+                education = #{education},
+            </if>
+            <if test="isfamous!=null and isfamous!=''">
+                isfamous = #{isfamous},
+            </if>
+            <if test="telephone!=null and telephone!=''">
+                telephone = #{telephone},
+            </if>
+            <if test="status!=null and status!=''">
+                status = #{status},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <insert id="addManager" parameterType="ManagerPo">
+        insert into manager (account,password,username,gender,age,education,isfamous,telephone,status,imageUrl) values (#{account},#{password},#{username},#{gender},#{age},#{education},#{isfamous},#{telephone},#{status},#{imageUrl})
+    </insert>
+
+    <!--根据id查询用户-->
+    <select id="findById" resultType="ManagerPo">
+        select * from manager where id=#{id}
+    </select>
+
+    <!--查询所有的老师-->
+    <select id="findAllTeacher" resultType="ManagerPo" parameterType="ManagerPo">
+        select * from manager where status=#{status}
+    </select>
+
+
+</mapper>

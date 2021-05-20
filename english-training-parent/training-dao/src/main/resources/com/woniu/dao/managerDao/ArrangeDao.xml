@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.managerDao.ArrangeDao">
+
+    <!--模糊查询-->
+    <select id="findByUsername" resultType="ArrangePo">
+        select * from arrange where  username LIKE CONCAT(CONCAT('%', #{username}), '%')
+    </select>
+
+    <insert id="add" >
+        insert into arrange(username,age,gender,telephone,orderTime,className,status)values (#{username},#{age},#{gender},#{telephone},#{orderTime},#{className},#{status})
+    </insert>
+
+    <select id="getCourse" resultType="ArrangePo">
+        SELECT DISTINCT className FROM arrange
+    </select>
+
+    <select id="getNum" resultType="Integer">
+        SELECT COUNT(*) FROM arrange GROUP BY className
+    </select>
+
+    <!--修改预约状态-->
+    <update id="updateArrange">
+        update arrange set status=#{status} where id=#{id}
+    </update>
+</mapper>

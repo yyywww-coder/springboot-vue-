@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.managerDao.MultiQuestionDao">
+    <!--查询所有的考试-->
+    <select id="getAllExam" resultType="ExamPo">
+        select * from multi_question where questionId in (select questionId from paper_manage
+        where questionType = 1 and paperId = #{paperId})
+    </select>
+
+    <!---->
+    <select id="findBySubject" resultType="Integer">
+        select questionId from multi_question  where subject =#{subject} order by rand() desc limit #{pageNo}
+    </select>
+
+    <select id="findOnlyQuestionId" resultType="MultiQuestionPo">
+        select questionId from multi_question order by questionId desc limit 1
+    </select>
+
+    <insert id="add" parameterType="MultiQuestionPo" useGeneratedKeys="true" keyProperty="questionId">
+        insert into multi_question(subject,question,answerA,answerB,answerC,answerD,rightAnswer,analysis,section,level)
+            values(#{subject},#{question},#{answerA},#{answerB},#{answerC},#{answerD},#{rightAnswer},#{analysis},#{section},#{level})
+    </insert>
+
+</mapper>

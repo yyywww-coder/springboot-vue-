@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woniu.dao.managerDao.LinksDao">
+
+    <!--查询所有链接-->
+    <select id="findAllLinks"  resultType="LinksPo">
+        select * from links
+    </select>
+
+    <!--根据ID更改链接-->
+    <update id="update" parameterType="LinksPo">
+        update links set linkname=#{linkname},linkaddress=#{linkaddress},logo=#{logo}
+        where id=#{id}
+    </update>
+
+    <!--根据ID删除链接-->
+    <delete id="delete" parameterType="LinksPo">
+        delete from links where id=#{id}
+    </delete>
+
+    <!--新增链接-->
+    <insert id="add" parameterType="LinksPo">
+        insert into links(linkname, linkaddress, logo) values (#{linkname},#{linkaddress},#{logo})
+    </insert>
+
+</mapper>

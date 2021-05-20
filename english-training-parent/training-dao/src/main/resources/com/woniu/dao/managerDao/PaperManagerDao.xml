@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.managerDao.PaperManagerDao">
+    <!--查询所有的考试-->
+    <insert id="add" parameterType="PaperManagePo">
+       insert into paper_manage(paperId,questionType,questionId)
+       values(#{paperId},#{questionType},#{questionId})
+    </insert>
+</mapper>

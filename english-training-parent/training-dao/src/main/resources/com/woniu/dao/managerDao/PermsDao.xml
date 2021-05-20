@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woniu.dao.managerDao.PermsDao">
+
+    <select id="findPermByUsername" resultType="PermsPo">
+        SELECT mp.permsid, p.`name`,p.`code`,p.percode,p.parentid,p.id,p.link FROM manager_perms mp , manager m , perms p WHERE mp.managerid = m.id and mp.permsid = p.id and m.account = #{account} and p.type='m'
+    </select>
+
+    <select id="findAllPerms" resultType="PermsPo">
+        select * from perms
+    </select>
+
+    <insert id="addPerms" >
+        insert into manager_perms(managerid,permsid) values (#{managerId},#{permsId})
+    </insert>
+
+    <delete id="delById">
+        delete from manager_perms where managerid = #{id}
+    </delete>
+
+    <select id="getById" resultType="PermsPo">
+        select * from perms p join manager_perms mp on p.id=mp.permsid where mp.managerid=#{id}
+    </select>
+
+    <select id="findPermsByUsername" resultType="String">
+        SELECT p.percode FROM `manager` m inner join manager_perms mp on m.id = mp.managerid inner join perms p on p.id = mp.permsid where username = #{username}
+    </select>
+</mapper>

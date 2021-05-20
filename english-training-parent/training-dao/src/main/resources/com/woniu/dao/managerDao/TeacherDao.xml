@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.managerDao.TeacherDao">
+
+    <!--模糊查询查教师-->
+    <select id="getList"  parameterType="com.woniu.po.TeacherPo" resultType="TeacherPo">
+    select * from manager where  username LIKE CONCAT(CONCAT('%', #{username}), '%') AND status='0'
+</select>
+
+<!--    &lt;!&ndash;查所有&ndash;&gt;-->
+<!--    <select id="findAll" resultType="TeacherPo">-->
+<!--        select * from manager-->
+<!--    </select>-->
+
+    <!--根据id查询-->
+    <select id="findByid"  resultType="TeacherPo">
+        select * from manager where  id=#{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.frontDao.ExamManageFrontDao">
+
+    <!--查找所有的Banner图-->
+    <select id="findExamByCode"  resultType="ExamManagePo">
+        select * from exam_manage
+        <where>
+        <if test="source != null and source != ''">
+            source like concat("%" #{source} "%")
+        </if>
+    </where>
+    </select>
+    
+    <select id="findByExamCode" resultType="ExamManagePo">
+        select * from exam_manage where examCode = #{examCode}
+    </select>
+
+
+</mapper>

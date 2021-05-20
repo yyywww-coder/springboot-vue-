@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.frontDao.FillQuestionFrontDao">
+
+    <select id="findByIdAndType" resultType="FillQuestionPo">
+        select * from fill_question where questionId in (select questionId from paper_manage where questionType = 2 and paperId = #{paperId})
+    </select>
+
+</mapper>
